@@ -1,0 +1,151 @@
+/* static/css/style.css */
+
+/* --- Importar Fuente y Variables Globales --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+    --bg-color: #1a1a1c;
+    --surface-color: #242426;
+    --primary-color: #6a5acd; /* Un morado vibrante */
+    --text-color: #e1e1e6;
+    --text-muted: #a8a8b3;
+    --border-color: #323238;
+}
+
+/* --- Reseteo y Estilos Base --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* --- Contenedor Principal y Navegación --- */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 1.8em;
+}
+
+.nav-links button {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.nav-links button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Tarjetas (Cards) --- */
+.card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* --- Formularios --- */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+form input[type="text"], form select {
+    flex-grow: 1;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+form input[type="text"]:focus, form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+form button, .card button {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover, .card button:hover {
+    background-color: #5a4ab9;
+}
+
+/* --- Barra de Estado --- */
+#status-bar {
+    background-color: var(--surface-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+.status-active { color: #2ecc71; font-weight: bold; }
+.status-inactive { color: #e74c3c; font-weight: bold; }
+
+/* --- Estilos para Grids (Dashboard y Pupitres) --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+/* --- Estilos para el Dashboard --- */
+.chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+}
+
+#student-details-card {
+    display: none; /* Oculto por defecto */
+}
