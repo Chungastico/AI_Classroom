@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Pupitres</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gestionar Pupitres</h1>
+            <div class="nav-links">
+                <a href="/"><button>Volver al Inicio</button></a>
+            </div>
+        </header>
+        
+        <div class="grid-container">
+            {% for zone_name, coords in desk_zones.items() %}
+            <div class="card">
+                <h3>{{ zone_name }}</h3>
+                <form class="assign-form" data-zone="{{ zone_name }}">
+                    <select name="student_id">
+                        <option value="None">-- Desasignar --</option>
+                        {% for student in students %}
+                        <option value="{{ student.id }}" {% if current_assignments[zone_name] == student.id %}selected{% endif %}>
+                            {{ student.nombre }} {{ student.apellido }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Asignar</button>
+                </form>
+                <p>Asignado a: <strong id="assigned-{{ zone_name }}">{{ current_assignments[zone_name] or 'Nadie' }}</strong></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.assign-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const zoneName = e.target.dataset.zone;
+                const studentId = e.target.querySelector('select').value;
+                
+                const response = await fetch('/assign_desk', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: new URLSearchParams({ zone_name: zoneName, student_id: studentId })
+                });
+                const result = await response.json();
+                alert(result.message);
+                window.location.reload(); // Recarga para ver los cambios
+            });
+        });
+    </script>
+</body>
+</html>

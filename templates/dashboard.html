@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Asistencia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dashboard del Día</h1>
+            <div class="nav-links">
+                <a href="/"><button>Inicio</button></a>
+                <a href="/manage_desks"><button>Gestionar Pupitres</button></a>
+            </div>
+        </header>
+
+        <main class="grid-container">
+            <div class="card">
+                <h2>Resumen de Asistencia por Período</h2>
+                <div class="chart-container">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Lista de Estudiantes</h2>
+                <p style="color: var(--text-muted); font-size: 0.9em; margin-bottom: 15px;">Haz clic en un estudiante para ver su historial de asistencia.</p>
+                <ul id="student-list" style="list-style: none; padding-left: 0;">
+                    </ul>
+            </div>
+        </main>
+        
+        <div class="card" id="student-details-card">
+            <div id="student-details-content">
+                </div>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

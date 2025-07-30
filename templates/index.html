@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Asistencia IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Asistencia y Participación IA</h1>
+            <div class="nav-links">
+                <a href="/manage_desks"><button>Gestionar Pupitres</button></a>
+                <a href="/dashboard"><button>Ver Dashboard</button></a>
+            </div>
+        </header>
+
+        <div id="status-bar">Cargando estado...</div>
+        
+        <div class="card">
+            <h2>Registrar Nuevo Estudiante</h2>
+            <form id="register-form">
+                <input type="text" name="student_id" placeholder="ID del Estudiante" required>
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="apellido" placeholder="Apellido" required>
+                <button type="submit">Iniciar Registro Facial</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Control de Monitoreo</h2>
+            <button onclick="startMonitor('pose')">Iniciar Monitoreo de CLASE (Pose)</button>
+            <button onclick="stopMonitor('pose')">Detener Monitoreo de CLASE</button>
+            <hr style="border-color: var(--border-color); margin: 15px 0;">
+            <button onclick="startMonitor('attendance')">Iniciar Monitoreo de ASISTENCIA (Facial)</button>
+            <button onclick="stopMonitor('attendance')">Detener Monitoreo de ASISTENCIA</button>
+        </div>
+    </div>
+
+    <script>
+        async function postRequest(url, data) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams(data)
+            });
+            return response.json();
+        }
+
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            const result = await postRequest('/register', data);
+            alert(result.message);
+        });
+
+        async function startMonitor(type) {
+            const result = await postRequest(`/start_${type}_monitor`, {});
+            alert(result.message);
+            updateStatus();
+        }
+
+        async function stopMonitor(type) {
+            const result = await postRequest(`/stop_${type}_monitor`, {});
+            alert(result.message);
+            updateStatus();
+        }
+        
+        async function updateStatus() {
+            const response = await fetch('/status');
+            const data = await response.json();
+            const statusBar = document.getElementById('status-bar');
+            statusBar.innerHTML = `
+                <strong>Asistencia (Facial):</strong> <span class="${data.attendance_active ? 'status-active' : 'status-inactive'}">${data.attendance_active ? 'ACTIVO' : 'INACTIVO'}</span> | 
+                <strong>Clase (Pose):</strong> <span class="${data.pose_active ? 'status-active' : 'status-inactive'}">${data.pose_active ? 'ACTIVO' : 'INACTIVO'}</span> |
+                <em>${data.periodo}</em>
+            `;
+        }
+
+        setInterval(updateStatus, 5000); // Actualiza cada 5 segundos
+        updateStatus(); // Carga inicial
+    </script>
+</body>
+</html>
