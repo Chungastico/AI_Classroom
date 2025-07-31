@@ -18,13 +18,13 @@ Sigue estos pasos para la instalación inicial del entorno virtual y las depende
     ```bash
     python -m venv nombre_del_entorno
     ```
-4.  Actualiza `pip` dentro de tu entorno virtual:
-    ```bash
-    pip install --upgrade pip
-    ```
-5.  Activa el entorno virtual:
+4.  Activa el entorno virtual:
     ```bash
     .\nombre_del_entorno\Scripts\activate
+    ```
+5.  Actualiza `pip` dentro de tu entorno virtual:
+    ```bash
+    pip install --upgrade pip
     ```
 6.  Instala las dependencias del proyecto listadas en `requirements.txt`:
     ```bash
