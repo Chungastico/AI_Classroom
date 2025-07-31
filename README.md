@@ -56,4 +56,8 @@ Una vez que el entorno está configurado, puedes ejecutar el proyecto siguiendo 
 ## Cerrar el Servidor
 
 Para detener el servidor o la aplicación que se está ejecutando en la consola, presiona las teclas:
+1.  Desactivar el entorno virtual:
+    ```bash
+    deactivade
+    ```
 
